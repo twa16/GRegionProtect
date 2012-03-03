@@ -20,7 +20,8 @@ public class Protection {
     private ArrayList<String> allowed=new ArrayList<String>();
     public int xMin, xMax, yMin, yMax, zMin, zMax;
     public World world;
-
+    public ArrayList<String> AllowedPlayers;
+    
     public Protection(Location point1, Location point2) {
         this.xMin = Math.min(point1.getBlockX(), point2.getBlockX());
         this.xMax = Math.max(point1.getBlockX(), point2.getBlockX());
@@ -29,6 +30,7 @@ public class Protection {
         this.zMin = Math.min(point1.getBlockZ(), point2.getBlockZ());
         this.zMax = Math.max(point1.getBlockZ(), point2.getBlockZ());
         this.world = point1.getWorld();
+        AllowedPlayers=new ArrayList<String>();
     }
 
     public String getOwnerName() {
@@ -59,6 +61,10 @@ public class Protection {
         }
         return true;
     }
+    
+    public void addAllowedPlayers(String player){
+        AllowedPlayers.add(player);
+    }
 
     public int getXWidth() {
         return xMax - xMin;
@@ -74,5 +80,9 @@ public class Protection {
 
     public int getArea() {
         return getHeight() * getXWidth() * getZWidth();
+    }
+    
+    public String[] getAllowedPlayers(){
+        return (String[]) AllowedPlayers.toArray();
     }
 }
