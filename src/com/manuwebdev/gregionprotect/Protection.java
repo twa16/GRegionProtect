@@ -21,6 +21,7 @@ public class Protection {
     public int xMin, xMax, yMin, yMax, zMin, zMax;
     public World world;
     public ArrayList<String> AllowedPlayers;
+    public static final String SEPARATOR=":";
     
     public Protection(Location point1, Location point2) {
         this.xMin = Math.min(point1.getBlockX(), point2.getBlockX());
@@ -84,5 +85,30 @@ public class Protection {
     
     public String[] getAllowedPlayers(){
         return (String[]) AllowedPlayers.toArray();
+    }
+    
+    public String getAllowedPlayersAsString(){
+        String Allowed="";
+        for(int i=0;i<AllowedPlayers.size();i++){
+            Allowed=Allowed+""+AllowedPlayers.get(i);
+        }
+        return Allowed;
+    }
+    
+    public void addAllowedPlayer(String player){
+        AllowedPlayers.add(player);
+    }
+    
+    public void removeAllowedPlayer(String player){
+        AllowedPlayers.remove(player);
+    }
+    
+    public int setAllowedPlayers(String list){
+        String[] names=list.split(SEPARATOR);
+        AllowedPlayers.clear();
+        for(int i=0;i<names.length;i++){
+            AllowedPlayers.add(names[i]);
+        }
+        return AllowedPlayers.size();
     }
 }
