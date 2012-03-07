@@ -23,6 +23,7 @@
  */
 package com.manuwebdev.gregionprotect;
 
+import com.manuwebdev.gregionprotect.MYSQL.MYSQLActions;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -47,14 +48,18 @@ public class GRegionProtect extends JavaPlugin {
     /**
      * Keeps track of who is in selection mode
      */
-    private static Map<Player,Boolean> Selection=new HashMap<Player,Boolean>();
+    private static Map<Player, Boolean> Selection = new HashMap<Player, Boolean>();
+    /**
+     * Keeps track of who is in selection mode
+     */
+    private static Map<Player, ProtectionFactory> Factories = new HashMap<Player, ProtectionFactory>();
     /**
      * Plugin
      */
     private GRegionProtect plugin = this;
+    public static final ChatColor MessageColor = ChatColor.GOLD;
+    private MYSQLActions mysqlActions;
     
-    public static final ChatColor MessageColor=ChatColor.GOLD;
-
     @Override
     public void onDisable() {
         log.info("[" + PLUGIN_NAME + "] Disabled.");
@@ -64,12 +69,32 @@ public class GRegionProtect extends JavaPlugin {
     public void onEnable() {
         log.info("[" + PLUGIN_NAME + "] Enabled.");
     }
-    
-    public void setSelectionToggle(Player p, boolean toggle){
+
+    public void setSelectionToggle(Player p, boolean toggle) {
         Selection.put(p, toggle);
     }
-    
-    public boolean getSelectionToggle(Player p){
+
+    public boolean getSelectionToggle(Player p) {
         return Selection.get(p);
+    }
+
+    public void registerProtectionFactory(Player p, ProtectionFactory factory) {
+        Factories.put(p, factory);
+    }
+
+    public ProtectionFactory getProtectionFactory(Player p) {
+        return Factories.get(p);
+    }
+
+    public boolean hasProtectionFactory(Player p) {
+        return Factories.containsKey(p);
+    }
+
+    public void removeProtectionFactory(Player p) {
+        Factories.remove(p);
+    }
+
+    public MYSQLActions getMYSQLActions() {
+        return mysqlActions;
     }
 }

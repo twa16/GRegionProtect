@@ -46,29 +46,35 @@ public class MYSQLActions {
     
     /**
      * 
+  
      * @param mysqlInterface Connection with MYSQL
      */
     public MYSQLActions(GMYSQL mysqlInterface){
-        this.mysqlInterface=mysqlInterface;
-    }   
+        this.mysqlInterface=mysqlInterface;  }   
     
-    public ArrayList<String> getAllowedPlayers(Protection p){
+    public void addProtection(Protection p){
         //Statement
-        final String QUERY = "SELECT * FROM" + TABLE_NAME + " WHERE ";
+        final String QUERY = "INSERT INTO " + TABLE_NAME + " VALUES(?,?,?,?,?,?,?,?,?,?)";
         try {
            //Get the statement
             PreparedStatement ps = (PreparedStatement) mysqlInterface.getConnection().prepareStatement(QUERY);
             //set platyername as part of query
             ps.setString(1, p.getOwnerName());
-            ps.setString(2, p.getAllowedString());
+            ps.setString(2, p.getAllowedPlayersAsString());
+            ps.setInt(3, p.xMin);
+            ps.setInt(4, p.yMin);
+            ps.setInt(5, p.zMin);
+            ps.setInt(6, p.xMax);
+            ps.setInt(7, p.yMax);
+            ps.setInt(8, p.zMax);
+            ps.setString(9, p.getChunkID());
+            ps.setString(3, p.world.getName());
             //Get results
-            ResultSet rs = ps.executeQuery();
-            //Return if ResultSet is null
-            return rs.next();
+            ps.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(MYSQLActions.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
     }
     
     
@@ -98,11 +104,14 @@ public class MYSQLActions {
 
                 String sql = "CREATE TABLE " + TABLE_NAME + "("
                         + "OWNER             VARCHAR(254), "
-                        + "NAME              VARCHAR(50), "
                         + "ALLOWED           VARCHAR(254), "
-                        + "X                 INTEGER, "
-                        + "Y                 INTEGER, "
-                        + "Z                 INTEGER, "
+                        + "P1X                 INTEGER, "
+                        + "P1Y                 INTEGER, "
+                        + "P1Z                 INTEGER, "
+                        + "P2X                 INTEGER, "
+                        + "P2Y                 INTEGER, "
+                        + "P2Z                 INTEGER, "
+                        + "CHUNKID           VARCHAT(254), "
                         + "WORLD             VARCHAR(254))";
 
                 stmt.executeUpdate(sql);

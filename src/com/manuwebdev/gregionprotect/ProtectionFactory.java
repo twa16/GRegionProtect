@@ -21,14 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.manuwebdev.gregionprotect.Commands;
+package com.manuwebdev.gregionprotect;
+
+import java.util.ArrayList;
+import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  *
  * @author Manuel Gauto
  */
-public class Arguments {
-    public static final String SELECTION="select";
-    public static final String HELP="help";
-    public static final String DONE="done";
+public class ProtectionFactory {
+
+    private String ownerName = null;
+    public int xMin, xMax, yMin, yMax, zMin, zMax;
+    public World world;
+    public ArrayList<String> AllowedPlayers;
+    private Location p1 = null;
+    private Location p2 = null;
+    private Protection p;
+
+    public void setPoint1(Location p) {
+        p1 = p;
+    }
+
+    public void setPoint2(Location p) {
+        p2 = p;
+    }
+
+    public void setOwner(String name) {
+        this.ownerName = name;
+    }
+
+    public Protection generateProtection() {
+        if (p1!=null&&p2!=null&&ownerName!=null) {
+            p = new Protection(p1, p2, ownerName);
+            return p;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public Protection getProtection() {
+        return p;
+    }
 }

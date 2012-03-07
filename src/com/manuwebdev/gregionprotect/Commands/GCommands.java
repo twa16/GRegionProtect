@@ -63,13 +63,20 @@ public class GCommands implements CommandExecutor {
             //Player sent command
             if (player.hasPermission(BASE_COMMAND_PERMISSION) || player.isOp()) {
                 ArrayList<String> arguments = ArgumentArrayToArrayList(args);
-                
+
                 if (arguments.contains(Arguments.SELECTION)) {
                     SelectionCommand.processCommand(plugin, args, player);
 
                 }
-                
-                
+
+                if (arguments.contains(Arguments.DONE)) {
+                    DoneCommand.selectionDone(plugin, player);
+                }
+
+                if (arguments.contains(Arguments.HELP)) {
+                    HelpCommand.printhelp(player);
+                }
+
                 return true;
             }
         }

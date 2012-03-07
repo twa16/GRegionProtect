@@ -25,6 +25,7 @@ package com.manuwebdev.gregionprotect;
 
 
 import java.util.ArrayList;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -37,13 +38,13 @@ import org.bukkit.World;
 public class Protection {
 
     private String ownerName;
-    private ArrayList<String> allowed=new ArrayList<String>();
     public int xMin, xMax, yMin, yMax, zMin, zMax;
     public World world;
     public ArrayList<String> AllowedPlayers;
     public static final String SEPARATOR=":";
+    private Chunk c;
     
-    public Protection(Location point1, Location point2) {
+    public Protection(Location point1, Location point2,String ownername) {
         this.xMin = Math.min(point1.getBlockX(), point2.getBlockX());
         this.xMax = Math.max(point1.getBlockX(), point2.getBlockX());
         this.yMin = Math.min(point1.getBlockY(), point2.getBlockY());
@@ -52,12 +53,28 @@ public class Protection {
         this.zMax = Math.max(point1.getBlockZ(), point2.getBlockZ());
         this.world = point1.getWorld();
         AllowedPlayers=new ArrayList<String>();
+        this.ownerName=ownername;
+        AllowedPlayers.add(ownername);
+        c=point1.getChunk();
     }
 
+    public Chunk getChunk(){
+        return c;
+    }
+    
+    public String getChunkID(){
+        String ID=c.getX()+"::"+c.getZ();
+        return ID;
+    }
+    
     public String getOwnerName() {
         return ownerName;
     }
-
+    
+    public boolean isAllowed(String player){
+        return AllowedPlayers.contains(player);
+    }
+        
     public boolean isIn(Location loc) {
         if (loc.getWorld() != this.world) {
             return false;

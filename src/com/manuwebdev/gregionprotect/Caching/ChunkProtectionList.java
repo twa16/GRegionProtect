@@ -21,14 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.manuwebdev.gregionprotect.Commands;
+package com.manuwebdev.gregionprotect.Caching;
+
+import com.manuwebdev.gregionprotect.Protection;
+import java.util.ArrayList;
+import org.bukkit.Chunk;
 
 /**
  *
  * @author Manuel Gauto
  */
-public class Arguments {
-    public static final String SELECTION="select";
-    public static final String HELP="help";
-    public static final String DONE="done";
+public class ChunkProtectionList {
+    private int ChunkX;
+    private int ChunkZ;
+    private String ChunkID;
+    private ArrayList<Protection> Protections;
+    
+    public ChunkProtectionList(Chunk c){
+        ChunkX=c.getX();
+        ChunkZ=c.getZ();
+        
+    }
 }

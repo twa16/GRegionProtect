@@ -33,27 +33,20 @@ import org.bukkit.entity.Player;
  * @author Manuel Gauto
  */
 public class SelectionCommand {
-    
+
     public static void processCommand(GRegionProtect plugin, String[] args, Player p) {
-        ArrayList<String> arguments=ArgumentArrayToArrayList(args);
-        if(arguments.contains(Arguments.SELECTION)){
-            if(plugin.getSelectionToggle(p)){
-                p.sendRawMessage(plugin.MessageColor+"[GProtect] You are already in selection mode");
-            }
-            else{
-                plugin.setSelectionToggle(p, true);
-                p.sendRawMessage(plugin.MessageColor+"[GProtect] You are now in selection mode");
-                p.sendRawMessage(plugin.MessageColor+"[GProtect] Use \"/protect help\" for help");
-            }
-        }
-        
-        if(arguments.contains(Arguments.HELP)){
-            HelpCommand.printhelp(p);
+        ArrayList<String> arguments = ArgumentArrayToArrayList(args);
+        if (plugin.getSelectionToggle(p)) {
+            p.sendRawMessage(plugin.MessageColor + "[GProtect] You are already in selection mode");
+        } else {
+            plugin.setSelectionToggle(p, true);
+            p.sendRawMessage(plugin.MessageColor + "[GProtect] You are now in selection mode");
+            p.sendRawMessage(plugin.MessageColor + "[GProtect] Use \"/protect help\" for help");
         }
     }
 
     private static ArrayList<String> ArgumentArrayToArrayList(String[] array) {
-        ArrayList<String> list=new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<String>();
         list.addAll(Arrays.asList(array));
         return list;
     }
