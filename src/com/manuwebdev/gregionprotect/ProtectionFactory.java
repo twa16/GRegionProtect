@@ -54,11 +54,15 @@ public class ProtectionFactory {
     }
 
     public Protection generateProtection() {
-        if (p1!=null&&p2!=null&&ownerName!=null) {
-            p = new Protection(p1, p2, ownerName);
-            return p;
-        }
-        else{
+        if (p1 != null && p2 != null && ownerName != null) {
+            if (p1.getWorld().getName().equals(p2.getWorld().getName())) {
+                p = new Protection(p1, p2, ownerName);
+                return p;
+            }
+            else{
+                return null;
+            }
+        } else {
             return null;
         }
     }

@@ -23,13 +23,10 @@
  */
 package com.manuwebdev.gregionprotect;
 
-
 import java.util.ArrayList;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-
-
 
 /**
  *
@@ -41,10 +38,10 @@ public class Protection {
     public int xMin, xMax, yMin, yMax, zMin, zMax;
     public World world;
     public ArrayList<String> AllowedPlayers;
-    public static final String SEPARATOR=":";
+    public static final String SEPARATOR = ":";
     private Chunk c;
-    
-    public Protection(Location point1, Location point2,String ownername) {
+
+    public Protection(Location point1, Location point2, String ownername) {
         this.xMin = Math.min(point1.getBlockX(), point2.getBlockX());
         this.xMax = Math.max(point1.getBlockX(), point2.getBlockX());
         this.yMin = Math.min(point1.getBlockY(), point2.getBlockY());
@@ -52,29 +49,29 @@ public class Protection {
         this.zMin = Math.min(point1.getBlockZ(), point2.getBlockZ());
         this.zMax = Math.max(point1.getBlockZ(), point2.getBlockZ());
         this.world = point1.getWorld();
-        AllowedPlayers=new ArrayList<String>();
-        this.ownerName=ownername;
+        AllowedPlayers = new ArrayList<String>();
+        this.ownerName = ownername;
         AllowedPlayers.add(ownername);
-        c=point1.getChunk();
+        c = point1.getChunk();
     }
 
-    public Chunk getChunk(){
+    public Chunk getChunk() {
         return c;
     }
-    
-    public String getChunkID(){
-        String ID=c.getX()+"::"+c.getZ();
+
+    public String getChunkID() {
+        String ID = c.getX() + "::" + c.getZ();
         return ID;
     }
-    
+
     public String getOwnerName() {
         return ownerName;
     }
-    
-    public boolean isAllowed(String player){
+
+    public boolean isAllowed(String player) {
         return AllowedPlayers.contains(player);
     }
-        
+
     public boolean isIn(Location loc) {
         if (loc.getWorld() != this.world) {
             return false;
@@ -99,8 +96,8 @@ public class Protection {
         }
         return true;
     }
-    
-    public void addAllowedPlayers(String player){
+
+    public void addAllowedPlayers(String player) {
         AllowedPlayers.add(player);
     }
 
@@ -119,33 +116,38 @@ public class Protection {
     public int getArea() {
         return getHeight() * getXWidth() * getZWidth();
     }
-    
-    public String[] getAllowedPlayers(){
+
+    public String[] getAllowedPlayers() {
         return (String[]) AllowedPlayers.toArray();
     }
-    
-    public String getAllowedPlayersAsString(){
-        String Allowed="";
-        for(int i=0;i<AllowedPlayers.size();i++){
-            Allowed=Allowed+""+AllowedPlayers.get(i);
+
+    public String getAllowedPlayersAsString() {
+        String Allowed = "";
+        for (int i = 0; i < AllowedPlayers.size(); i++) {
+            Allowed = Allowed + "" + AllowedPlayers.get(i);
         }
         return Allowed;
     }
-    
-    public void addAllowedPlayer(String player){
+
+    public void addAllowedPlayer(String player) {
         AllowedPlayers.add(player);
     }
-    
-    public void removeAllowedPlayer(String player){
+
+    public void removeAllowedPlayer(String player) {
         AllowedPlayers.remove(player);
     }
-    
-    public int setAllowedPlayers(String list){
-        String[] names=list.split(SEPARATOR);
+
+    public int setAllowedPlayers(String list) {
+        String[] names = list.split(SEPARATOR);
         AllowedPlayers.clear();
-        for(int i=0;i<names.length;i++){
+        for (int i = 0; i < names.length; i++) {
             AllowedPlayers.add(names[i]);
         }
         return AllowedPlayers.size();
+    }
+
+    public String getID() {
+        String prehash=xMin+"::"+yMin+"::"+zMin;
+        return prehash;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2012 Manuel Gauto.
+ * Copyright 2012 MANUEL.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,46 +24,21 @@
 package com.manuwebdev.gregionprotect.Caching;
 
 import com.manuwebdev.gregionprotect.Protection;
-import java.util.ArrayList;
 import org.bukkit.Chunk;
-import org.bukkit.block.Block;
 
 /**
  *
- * @author Manuel Gauto
+ * @author MANUEL
  */
-public class ChunkProtectionList {
+public class IDUtils {
 
-    private int ChunkX;
-    private int ChunkZ;
-    private String ChunkID;
-    private ArrayList<Protection> Protections;
-
-    public ChunkProtectionList(Chunk c, ArrayList<Protection> p) {
-        ChunkX = c.getX();
-        ChunkZ = c.getZ();
-        ChunkID = IDUtils.getChunkID(c);
-        Protections = p;
+    public static String getChunkID(Chunk c) {
+        String prehash = c.getX() + "::" + c.getZ();
+        return prehash;
     }
 
-    public boolean isProtected(Block b) {
-        for (int i = 0; i < Protections.size(); i++) {
-            if (Protections.get(i).isIn(b.getLocation())) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public void removeProtection(String ProtectionID){
-        for (int i = 0; i < Protections.size(); i++) {
-            if (Protections.get(i).getID().equals(ProtectionID)) {
-                Protections.remove(i);
-            }
-        }
-    }
-    
-    public void addProtection(Protection p){
-        Protections.add(p);
+    public static String getProtectionID(Protection p) {
+        String prehash = p.xMin + "::" + p.yMin + "::" + p.zMin;
+        return prehash;
     }
 }
